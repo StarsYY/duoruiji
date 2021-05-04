@@ -117,7 +117,7 @@ class ExpertController extends BaseController
             return json_encode(array('success' => false, 'msg' => '上传失败'));
         } else {
             $fileext = $_FILES["upload_file"]["type"];
-            $allow_types = array("image/jpeg", "image/jpeg", "image/png", "image/gif");
+            $allow_types = array("image/jpeg", "image/jpg", "image/png", "image/gif");
             if (!in_array($fileext, $allow_types)) {
                 return json_encode(array('success' => false, 'msg' => '该文件不是图片'));
             }
@@ -137,9 +137,21 @@ class ExpertController extends BaseController
             $width = $rust[0];//原图的宽
             $height = $rust[1];//原图的高
             $target = imagecreatetruecolor($width / 10, $height / 10);
-            $source = imagecreatefromjpeg($aRealPath . "." . $ext);
+            if ($ext == "jpg" || $ext == "jpeg") {
+                $source = imagecreatefromjpeg($aRealPath . "." . $ext);
+            } elseif ($ext == "png"){
+                $source = imagecreatefrompng($aRealPath . "." . $ext);
+            } elseif ($ext == "gif"){
+                $source = imagecreatefromgif($aRealPath . "." . $ext);
+            }
             imagecopyresampled($target, $source, 0, 0, 0, 0, $width / 10, $height / 10, $width, $height);
-            imagejpeg($target, $aRealPath . ".jpg", 100);
+            if (($ext == "jpg") || ($ext == "jpeg")) {
+                imagejpeg($target, $aRealPath . "." . $ext, 100);
+            } elseif ($ext == "png"){
+                imagepng($target, $aRealPath . "." . $ext, 9);
+            } elseif ($ext == "gif"){
+                imagegif($target, $aRealPath . "." . $ext);
+            }
 
             $iamgeUrl = $tPath . "/" . $rand_name . "." . $ext;
 
