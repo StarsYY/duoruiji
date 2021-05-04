@@ -108,7 +108,7 @@ class VideoController extends BaseController
         $addexpert = Video::find($video->id);
         $addexpert->experts()->sync($datas['doc_id']);
 
-        return Redirect::to("/adm/expert");
+        return Redirect::to("/adm/video");
     }
 
     /**

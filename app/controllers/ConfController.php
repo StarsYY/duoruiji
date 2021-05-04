@@ -8,7 +8,7 @@ class ConfController extends BaseController
      */
     public function getIndex(){
         $start_video = Video::where('type', 'like', '0')->orderBy('start_time')->first();
-        getQRCode($_SERVER['HTTP_HOST'], public_path() . "/upload/1.png");
+        getQRCode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], public_path() . "/upload/1.png");
         if (isset($start_video)){
             $expert = $start_video->experts()->first();
             return View::make('front.conf')->with('expert', $expert)->with('start_video', $start_video)->with('url', '/upload/1.png');

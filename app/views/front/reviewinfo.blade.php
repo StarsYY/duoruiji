@@ -5,7 +5,8 @@
     <title>往期视频-详情</title>
     <script type="text/javascript" src="/admin/js/jquery.min.js"></script>
     <link href="/res/css/style.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="/ckplayer_video/ckplayer.js"></script>
+    <script type="text/javascript" src="/res/js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="/res/js/share.js"></script>
 </head>
 <body>
 <div class="head">
@@ -22,22 +23,10 @@
     <div class="past_top clearfix">
         <div class="past_left">
             <div class="past_left_title">{{$video->title}}</div>
-{{--            <div class="past_left_video" id="videoinfo">--}}
-                <video src="{{$video->url}}" height="320px" controls preload></video>
-{{--            </div>--}}
-            {{--<script type="text/javascript">
-                var flashvars = {
-                    f: '{{$video->url}}',
-                    c: 0,
-                    p: 2,
-                    b: 1
-                };
-                var video = ['{{$video->url}}'];
-                CKobject.embed('ckplayer_video/ckplayer.swf','videoinfo','ckplayer_a1','548','329',false,flashvars,video);
-            </script>--}}
+            <video src="{{$video->url}}" height="320px" controls preload></video>
             <div class="online_class_share">
                 <span>分享到：</span>
-                <a href="javascript:void(0)"><img src="/res/images/icon_weixin.jpg" /></a>
+                <a href="javascript:void(0)" onclick="share_wx()"><img src="/res/images/icon_weixin.jpg" /></a>
             </div>
         </div>
         <div class="past_right">
@@ -86,6 +75,15 @@
             </div>
             @endforeach
         </div>
+    </div>
+</div>
+
+<!--微信分享弹窗-->
+<div class="chat_pop" style="display:none">
+    <div class="chat_pop_top"><a href="javascript:void(0)" onclick="close_wx()" class="chat_pop_close"></a></div>
+    <div class="chat_pop_body">
+        <img src="{{$url}}" />
+        <p>使用微信扫一扫，并将网页分享给好友</p>
     </div>
 </div>
 </body>

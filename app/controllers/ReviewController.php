@@ -27,11 +27,12 @@ class ReviewController extends BaseController
         $video = Video::find($id);
         $experts = $video->experts;
         $expert_id = $video->experts()->first();
+        getQRCode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], public_path() . "/upload/1.png");
         if(isset($expert_id)){
             $expert = Expert::find($expert_id->id);
             $videos = $expert->videos()->where('type', 'like', '1')->orderBy('end_time', 'desc')->first();
-            return View::make('front.reviewinfo')->with('video', $video)->with('experts', $experts)->with('videos', $videos);
+            return View::make('front.reviewinfo')->with('video', $video)->with('experts', $experts)->with('videos', $videos)->with('url', '/upload/1.png');
         }
-        return View::make('front.reviewinfo')->with('video', $video)->with('experts', $experts);
+        return View::make('front.reviewinfo')->with('video', $video)->with('experts', $experts)->with('url', '/upload/1.png');
     }
 }

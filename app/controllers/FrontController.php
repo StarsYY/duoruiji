@@ -27,7 +27,7 @@ class FrontController extends BaseController
         }
 
         $count = Video::where('type', 'like', '0')->count();
-        getQRCode($_SERVER['HTTP_HOST'], public_path() . "/upload/1.png");
+        getQRCode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], public_path() . "/upload/1.png");
 
         return View::make('index')->with('videos', $videos)->with('experts', $experts)->with('count', $count)->with('start_video', $start_video)->with('url', "/upload/1.png");
     }
