@@ -90,25 +90,25 @@ class VideoController extends BaseController
             'photo'=>'required'
         );
         $validator = Validator::make($datas,$rules);
-        if ($validator->fails()){
+        if (empty ($datas['doc_id']) == true || in_array('0', $datas['doc_id']) || $validator->fails()){
             $errors = "请按要求填写信息";
             return Redirect::to("/adm/video/edit-video/".$datas['id'])->withErrors($errors);
+        } else {
+            $video = Video::find($datas['id']);
+            $video->title = $datas['title'];
+            $video->url = "/videos/video.mp4";
+            $video->type = $datas['type'];
+            $video->course = $datas['course'];
+            $video->start_time = $datas['start_time'];
+            $video->end_time = $datas['end_time'];
+            $video->cover = $datas['photo'];
+            $video->update();
+
+            $addexpert = Video::find($video->id);
+            $addexpert->experts()->sync($datas['doc_id']);
+
+            return Redirect::to("/adm/video");
         }
-
-        $video = Video::find($datas['id']);
-        $video->title=$datas['title'];
-        $video->url="/videos/video.mp4";
-        $video->type=$datas['type'];
-        $video->course=$datas['course'];
-        $video->start_time=$datas['start_time'];
-        $video->end_time=$datas['end_time'];
-        $video->cover=$datas['photo'];
-        $video->update();
-
-        $addexpert = Video::find($video->id);
-        $addexpert->experts()->sync($datas['doc_id']);
-
-        return Redirect::to("/adm/video");
     }
 
     /**
