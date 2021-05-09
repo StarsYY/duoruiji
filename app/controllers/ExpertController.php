@@ -125,7 +125,7 @@ class ExpertController extends BaseController
             $ext = substr($_FILES["upload_file"]["name"], strrpos($_FILES["upload_file"]["name"], ".") + 1);
             $rand_name = date('YmdHis', time()) . rand(1000, 9999);
 
-            $rPath = "public/upload/expert_thumb/$ext/" . date('Ymd', time());
+            $rPath = public_path() . "/upload/expert_thumb/$ext/" . date('Ymd', time());
             mkdirs($rPath); // 创建文件夹
 
             $tPath = "/upload/expert_thumb/$ext/" . date('Ymd', time());
