@@ -66,6 +66,7 @@
                 <div class="online_export_box">
                     <div class="online_export_bg"></div>
                     <div class="online_export clearfix">
+                        @if(isset($expert))
                         <div class="online_export_ship">
                             <div class="online_export_img">
                                 <a href="/expert/expert-info/{{$expert->id}}"><img src="{{$expert->portrait}}" /></a>
@@ -77,6 +78,7 @@
                                 <p>职称：{{$expert->title}}</p>
                             </div>
                         </div>
+                        @endif
                         <!--课程简介-->
                         <div class="online_export_ship border_left">
                             <div class="online_export_intro">
